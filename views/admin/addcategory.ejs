@@ -1,0 +1,89 @@
+<%-include("../admin/leyouts/header.ejs")%>
+<style>
+  #offerFormContainer {
+      display: none;
+    }
+
+    #toggleOfferForm {
+      cursor: pointer;
+      color: #007bff;
+      /* Adjust the color to your preference */
+    }
+</style>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+  <div class="col-12 grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">New Category</h4>
+          
+          <form action="/admin/addcategory" method="post" class="forms-sample">
+            <div class="form-group">
+              <label for="exampleInputName1">Category Name</label>
+              <input name="categoryname" type="text" class="form-control" id="exampleInputName1" placeholder="Category Name" required>
+            </div>
+            <!-- Toggle button/icon for offer form -->
+            <div id="toggleOfferForm" style="color: #ffbc05;">
+              <span class="menu-icon">
+                <i style="color: rgb(199, 11, 11);" class="mdi mdi-tag-multiple"></i>
+              </span>
+              Add Offer
+              &#9660; <!-- Unicode for a down arrow character -->
+            </div>
+            <br>
+
+
+            <!-- Offer form container (initially hidden) -->
+            <div id="offerFormContainer">
+              <div class="form-group">
+                <label for="discount">Discount (%)</label>
+                <input type="number" class="form-control" id="discount" name="discount" placeholder="Discount">
+              </div>
+
+              <div class="form-group">
+                <label for="activationDate">Activation Date</label>
+                <input type="date" class="form-control" id="activationDate" name="activationDate">
+              </div>
+
+              <div class="form-group">
+                <label for="expiryDate">Expiry Date</label>
+                <input type="date" class="form-control" id="expiryDate" name="expiryDate">
+              </div>
+            </div>
+            <!-- End of offer form container -->
+            
+            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+            <% if(typeof message !== 'undefined'){ %>
+              <span
+                id="er2"
+                style="color: rgb(241, 7, 7); text-align: center"
+                ><%= message %></span
+              >
+              <% } %>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <script>
+       const toggleOfferFormButton = document.getElementById('toggleOfferForm');
+      const offerFormContainer = document.getElementById('offerFormContainer');
+
+      toggleOfferFormButton.addEventListener('click', function () {
+        // Toggle the visibility of the offer form container
+        offerFormContainer.style.display = offerFormContainer.style.display === 'none' ? 'block' : 'none';
+      });
+
+      const inputs = document.querySelector("input")
+      const error_message = document.querySelector("#er2")
+
+      inputs.addEventListener("input", (e) => {
+        error_message.style.display = "none"
+      })
+
+    </script>
+
+    <%-include("../admin/leyouts/footer.ejs")%>

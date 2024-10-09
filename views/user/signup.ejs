@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>RegistrationForm FurniHub</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- MATERIAL DESIGN ICONIC FONT -->
+	<link rel="stylesheet" href="/user/signup/material-design-iconic-font.min.css">
+
+	<!-- STYLE CSS -->
+	<link rel="stylesheet" href="/user/stylesheets/signupStyle.css">
+</head>
+
+<body>
+
+	<div class="wrapper" style="background-image: url('/user/signup/green-sofa-white-living-room-with-free-space.jpg');">
+		<div class="inner">
+			<div class="image-holder">
+				<img src="/user/signup/rubber-plant-wooden-sideboard-table.jpg" alt="">
+			</div>
+			<form method="post" action="/register">
+				<h3>Registration Form</h3>
+
+				<div class="form-wrapper">
+					<input name="name" id="name" type="text" placeholder="Username" class="form-control">
+					<div class="error-message" id="name-error" style="  display: none;
+						color: rgb(161 17 17);
+						font-weight: bold;
+						font-size: 12px; "></div>
+				</div>
+				<div class="form-wrapper">
+					<input name="email" id="email" type="email" placeholder="Email Address" class="form-control">
+					<div class="error-message" id="email-error" style="  display: none;
+            			color: rgb(161 17 17);
+            			font-weight: bold;
+            			font-size: 12px; "></div>
+				</div>
+				<div class="form-wrapper">
+					<input id="number" name="number" type="tel" placeholder="Phone" class="form-control">
+					<div class="error-message" id="phone-error" style="  display: none;
+						color: rgb(161 17 17);
+						font-weight: bold;
+						font-size: 12px; "></div>
+				</div>
+				<div class="form-wrapper">
+					<input type="password" name="password" id="password" placeholder="Password" class="form-control">
+					<div class="error-message" id="password-error" style="  display: none;
+            			color: rgb(161 17 17);
+            			font-weight: bold;
+            			font-size: 12px; "></div>
+				</div>
+				<div class="form-wrapper">
+					<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password"
+						class="form-control">
+					<div class="error-message" id="confirm-error" style="  display: none;
+            			color: rgb(161 17 17);
+            			font-weight: bold;
+            			font-size: 12px; "></div>
+				</div>
+				<div class="form-wrapper">
+					<input type="text" id="referralCode" name="referralCode" placeholder="Referral Code"
+						class="form-control">
+					<div class="error-message" id="referral-error" style="  display: none;
+            			color: rgb(161 17 17);
+            			font-weight: bold;
+            			font-size: 12px; "></div>
+				</div>
+				<div class="form-wrapper">
+					<p   >Already have an account? <a style="text-decoration: none; color: rgb(109, 105, 105);" href="/login">Login</a></p>
+				</div>
+				<button type="submit" id="sign-btn-1">Register
+					<i class="zmdi zmdi-arrow-right"></i>
+				</button>
+			</form>
+		</div>
+	</div>
+
+	<script>
+
+		const inputs = document.querySelectorAll('input')
+  
+		const name_message = document.getElementById('name-error');
+		const email_message = document.getElementById('email-error');
+		const phone_message = document.getElementById('phone-error');
+		const password_message = document.getElementById('password-error');
+		const confirm_message = document.getElementById('confirm-error');
+		const err_message = document.getElementById("error-message"); 
+		const ref_message = document.getElementById('referral-error');     
+		inputs.forEach(input=>{
+		  input.addEventListener('input',function(){
+			name_message.textContent = ""
+			email_message.textContent = ""
+			phone_message.textContent = ""
+			password_message.textContent = ""
+			confirm_message.textContent = ""
+			err_message.textContent = ""
+			ref_message.textContent = ""
+		  })
+		})
+		
+	  </script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+	  <script src="/user/signupvalidation.js"></script>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+</html>

@@ -1,0 +1,217 @@
+<%-include("../user/leyouts/home-header.ejs")%>
+
+
+        <main class="main">
+        	<div class="page-header text-center" style="background-image: url('/user/images/page-header-bg.jpg')">
+        		<div class="container">
+        			<h1 class="page-title">PRODUCTS<span>HUB</span></h1>
+        		</div><!-- End .container -->
+        	</div><!-- End .page-header -->
+            <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
+                <div class="container">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/home">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/loadproduct">Shop</a></li>
+                        <!-- <li class="breadcrumb-item"><a href="#">No Sidebar</a></li> -->
+                        <!-- <li class="breadcrumb-item active" aria-current="page">Boxed</li> -->
+                    </ol>
+                </div><!-- End .container -->
+            </nav><!-- End .breadcrumb-nav -->
+
+            <div class="page-content">
+                <div class="container">
+        			<div class="toolbox">
+        				<div class="toolbox-left">
+                            <a href="#" class="sidebar-toggler"><i class="icon-bars"></i>Filters</a>
+        				</div><!-- End .toolbox-left -->
+
+                        <div class="toolbox-center">
+                            <div class="toolbox-info">
+                                Showing <span><%=count%> of <%=count%></span> Products
+                            </div><!-- End .toolbox-info -->
+                        </div><!-- End .toolbox-center -->
+
+        				<div class="toolbox-right">
+        					<!-- <div class="toolbox-sort">
+        						<label for="sortby">Sort by:</label>
+        						<div class="select-custom">
+									<select name="sortby" id="sortby" class="form-control">
+										<option value="popularity" selected="selected">Most Popular</option>
+										<option value="rating">Most Rated</option>
+										<option value="date">Date</option>
+									</select>
+								</div> -->
+        					<!-- </div>End .toolbox-sort -->
+        				</div><!-- End .toolbox-right -->
+        			</div><!-- End .toolbox -->
+
+                    <div class="products">
+                        <div class="row">
+
+                            <% products.forEach((data)=>{ %>
+
+                            <div class="col-6 col-md-4 col-lg-4 col-xl-3">
+                                <div class="product">
+                                    <figure class="product-media">
+                                        <span class="product-label label-new">New</span>
+                                        <a href="/productdetails?id=<%=data._id%>">
+                                            <img src="/products/crops/<%= data.images.image2 %>" alt="Product image" class="product-image">
+                                            <img src="/products/crops/<%= data.images.image3 %>" alt="Product image" class="product-image-hover">
+                                        </a>
+
+                                        <div class="product-action-vertical">
+                                            <a href="#" onclick="addToWishList('<%= data._id%>')" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
+                                        </div><!-- End .product-action -->
+
+                                        <div class="product-action action-icon-top">
+                                            <a href="#" onclick="addToCart('<%= data._id%>')" class="btn-product btn-cart"><span>add to cart</span></a>
+                                            <a href="/productdetails?id=<%=data._id%>" class="btn-product btn-quickview" title="Quick view"><span>view</span></a>
+                                            <a href="#" class="btn-product btn-compare" title="Compare"><span>compare</span></a>
+                                        </div><!-- End .product-action -->
+                                    </figure><!-- End .product-media -->
+
+                                    <div class="product-body">
+                                        <div class="product-cat">
+                                            <a href="#"><%= data.category %></a>
+                                        </div><!-- End .product-cat -->
+                                        <h3 class="product-title"><a href="/productdetails?id=<%=data._id%>"><%= data.name %></a></h3><!-- End .product-title -->
+                                        <div class="product-price">
+                                           Rs. <%= data.price %>
+                                           <% if(data.quantity == 0){ %>
+                                            &nbsp&nbsp<p style="color: red;">(Out of stock !)</p>
+                                            <% }else if(data.quantity < 10){ %>
+                                                &nbsp&nbsp<p style="color: red;">(Only&nbsp <%= data.quantity %> &nbsp left !)</p>
+                                                <% } %>
+                                        </div><!-- End .product-price -->
+                                        <div class="ratings-container">
+                                            <div class="ratings">
+                                                <div class="ratings-val" style="width: 0%;"></div><!-- End .ratings-val -->
+                                            </div><!-- End .ratings -->
+                                            <span class="ratings-text">( 45 Reviews )</span>
+                                        </div><!-- End .rating-container -->
+
+                                        <!-- <div class="product-nav product-nav-dots">
+                                            <a href="#" style="background: #cc9966;"><span class="sr-only">Color name</span></a>
+                                            <a href="#" class="active" style="background: #ebebeb;"><span class="sr-only">Color name</span></a>
+                                        </div>End .product-nav -->
+                                    </div><!-- End .product-body -->
+                                </div><!-- End .product -->
+                            </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
+
+                            <% }) %>
+                            
+                        </div><!-- End .row -->
+
+                        <% if(totalPages != 0){ %>
+                          <nav aria-label="Page navigation example " >
+                  <ul class="pagination d-flex justify-content-center">
+                    <li class="page-item">
+                      <a class="page"  aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <% for(let i=1;i<=totalPages;i++){ %>
+                    <li class="page-item"><a class="page-link" href="?page=<%= i %>"><%= i %></a></li>
+                    <% } %>
+                    <li class="page-item">
+                      <a class="page"  aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+                <% } %>
+                        
+                    </div><!-- End .products -->
+
+                    <div class="container">
+                        <form action="/filterProduct" method="POST"> <!-- Specify your endpoint for form submission -->
+                          <div class="sidebar-filter-overlay"></div>
+                          <aside class="sidebar-shop sidebar-filter">
+                            <div class="sidebar-filter-wrapper">
+                              <div class="widget widget-clean">
+                                <label><i class="icon-close"></i>Filters</label>
+                                <a href="#" class="sidebar-filter-clear">Clean All</a>
+                              </div>
+                              <div class="widget widget-collapsible">
+                                <h3 class="widget-title">
+                                  <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true" aria-controls="widget-1">
+                                    Category
+                                  </a>
+                                </h3>
+                                <div class="collapse show" id="widget-1">
+                                  <div class="widget-body">
+                                    <div class="filter-items filter-items-count">
+                                        <div class="filter-item">
+                                            <div class="custom-control custom-checkbox">
+                                              <input type="radio" name="category" checked class="custom-control-input" id="allCate" value="allCate">
+                                              <label class="custom-control-label" for="allCate">All Categories</label>
+                                            </div>
+                                          </div>
+                                      <% if(category.length != 0) {
+                                          category.forEach((data, i) => { %>
+                                      <div class="filter-item">
+                                        <div class="custom-control custom-checkbox">
+                                          <input type="radio" name="category" class="custom-control-input" id="<%= 'cat-' + i %>" value="<%= data.name %>">
+                                          <label class="custom-control-label" for="<%= 'cat-' + i %>"><%= data.name %></label>
+                                        </div>
+                                      </div>
+                                      <% })
+                                          } %>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                      
+                              <div class="widget widget-collapsible">
+                                <h3 class="widget-title">
+                                  <a data-toggle="collapse" href="#widget-2" role="button" aria-expanded="true" aria-controls="widget-2">
+                                    Prices
+                                  </a>
+                                </h3>
+                                <div class="collapse show" id="widget-2">
+                                  <div class="widget-body">
+                                    <div class="filter-items filter-items-count">
+                                      <div class="filter-item">
+                                        <div class="custom-control custom-checkbox">
+                                          <input type="radio" name="price" class="custom-control-input" checked id="allPrices" value="0">
+                                          <label class="custom-control-label" for="allPrices">All Prices</label>
+                                        </div>
+                                      </div>
+                                      <div class="filter-item">
+                                        <div class="custom-control custom-checkbox">
+                                          <input type="radio" name="price" class="custom-control-input" id="lowToHigh" value="1">
+                                          <label class="custom-control-label" for="lowToHigh">Low to high</label>
+                                        </div>
+                                      </div>
+                                      <div class="filter-item">
+                                        <div class="custom-control custom-checkbox">
+                                          <input type="radio" name="price" class="custom-control-input" id="highToLow" value="-1">
+                                          <label class="custom-control-label" for="highToLow">High to Low</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                      
+                              <button type="submit">Done</button> <!-- Add a submit button -->
+                            </div>
+                          </aside>
+                        </form>
+                      </div>
+                <% if(products.length == 0 ){ %>
+                    <div class="error-content text-center">
+                      <div class="container">
+                        <h1 class="error-title">Empty.</h1>
+                        <!-- End .error-title -->
+                        <p>Sorry, There is no products in FurniHub.</p>
+                      </div>
+                      <!-- End .container -->
+                    </div>
+      
+                    <% } %>
+            </div><!-- End .page-content -->
+        </main><!-- End .main -->
+
+        <%-include("../user/leyouts/footer.ejs")%>

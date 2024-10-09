@@ -1,0 +1,136 @@
+<%- include("../admin/leyouts/header.ejs")%>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+      <div class="row">
+        <div class="col-lg-6 grid-margin stretch-card">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Coupon Management</h4>
+              <p class="card-description"> Manage your coupon </p>
+              <p><a href="/admin/loadAddBanner" class="badge badge-success"> + Add Banner </a></p>
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>Image</th>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Status</th>
+                      <th>Updation</th>
+                      <th>Action</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      <% if(banner.length>0){
+                          for(let i=0;i<banner.length;i++){  %>
+                        <tr>
+                          <td><%= i+1 %></td>
+                          
+                          <td><img src="/banner/<%= banner[i].image %>" alt=""></td>
+                          <td><%= banner[i].title %></td>
+                          <td><%= banner[i].description %></td>
+                          <td><% if(banner[i].is_blocked){%>
+                            <p class="text-danger">Blocked</p>
+                            <%}else{%>
+                              <p class="text-success">Active</p>
+                              <%} %></td>
+                          <td><a href="/admin/loadeditBanner?id=<%= banner[i]._id %>" class="badge badge-warning">Update</a></td>
+
+                          <%  if(!banner[i].is_blocked){ %>
+                          
+                          <td onclick="bannerBlock('<%= banner[i]._id %>')"><a class="badge badge-danger" >Block</a></td>
+                         <% }else{ %>
+                          <td onclick="bannerBlock('<%= banner[i]._id %>')" ><a class="badge badge-success" >Unblock</a></td>
+                        <% } %>
+                        <td onclick="deleteBanner('<%= banner[i]._id %>')" ><a class="badge badge-danger">Delete</a></td>
+                        </tr>
+                        <% } %>
+                        <% }else{ %>
+                          <tr>
+                              <td colspan="5">Banner Not Found</td>
+                            </tr>
+                       <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+    <!-- partial -->
+  </div>
+  <script>
+    function bannerBlock(bannerId){
+      swal.fire({
+    text: "Are You Sure?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes",
+    cancelButtonText: "cancel",
+  })
+  .then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "/admin/block-banner",
+        data: {
+          bannerId: bannerId,
+        },
+        method: "post",
+        success: (response) => {
+          if ((response.remove = true)) {
+            location.reload();
+            swal.fire({
+              title: "Done",
+              text: "Suscces",
+              icon: "Suscces",
+              timer: 1500,
+              showConfirmButton: false,
+            });
+          }
+        },
+      });
+    }
+  });
+    }
+
+    function deleteBanner(bannerId){
+    swal.fire({
+    text: "Are You Sure?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes",
+    cancelButtonText: "cancel",
+  })
+  .then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "/admin/delete-banner",
+        data: {
+          bannerId: bannerId,
+        },
+        method: "post",
+        success: (response) => {
+          if ((response.remove = true)) {
+            location.reload();
+            swal.fire({
+              title: "Done",
+              text: "Suscces",
+              icon: "Suscces",
+              timer: 1500,
+              showConfirmButton: false,
+            });
+          }
+        },
+      });
+    }
+  });
+    }
+  </script>
+  <%- include("../admin/leyouts/footer.ejs")%>
