@@ -1,0 +1,73 @@
+## Default values for tmf635-usage.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+resources:
+  limits:
+    cpu: 300m
+    memory: 512Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+replicaCount: 2
+
+env:
+  - name: password
+    value: "MyValue"
+
+image:
+  repository: gcr.io/certain-router-423311-c7/my-app@sha256:0098f159530fdc9aaaa5a0c1221fc7355c0a89e5fbd3088dd0a6dbb66113a2ac # sanjay-repo
+  tag: latest
+  pullPolicy: Always
+
+service:
+  type: LoadBalancer
+  port: 3000
+
+ingress:
+  enabled: false
+  annotations: {} # Example: kubernetes.io/ingress.class: nginx
+  path: /
+  hosts:
+    - chart-example.local
+  tls: [] # Example: - secretName: chart-example-tls, hosts: [chart-example.local]
+
+# ingress:
+#   enabled: true
+#   path: /
+#   hosts:
+#     - example.com
+#   tls:
+#     - hosts:
+#         - example.com
+#       secretName: example-tls
+#   annotations:
+#     kubernetes.io/ingress.class: nginx
+
+# values.yaml
+# replicaCount: 1
+
+# image:
+#   repository: owasp/zap2docker-stable
+#   pullPolicy: IfNotPresent
+#   tag: latest
+
+# service:
+#   type: LoadBalancer
+#   port: 8081
+
+# resources: {}
+
+
+hpa:
+  enabled: true
+  maxReplicas: 2
+  minReplicas: 1
+  targetCPUUtilizationPercentage: 70
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
