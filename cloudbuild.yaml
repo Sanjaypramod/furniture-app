@@ -1,0 +1,36 @@
+resource "google_cloudbuild_trigger" "github_trigger" {
+  project = var.project_id
+  name    = "github-trigger"
+
+  github {
+    owner    = var.github_owner       # GitHub repository owner (username or organization)
+    name     = var.github_repository  # GitHub repository name
+    push {
+      branch = "^main$"  # Trigger on the main branch
+    }
+  }
+
+  build {
+    steps {
+      name = "gcr.io/cloud-builders/docker"
+      args = ["build", "-t", "gcr.io/${var.project_id}/my-app:$COMMIT_SHA", "."]
+    }
+    steps {
+      name = "gcr.io/cloud-builders/docker"
+      args = ["push", "gcr.io/${var.project_id}/my-app:$COMMIT_SHA"]
+    }
+    steps {
+      name = "gcr.io/cloud-builders/kubectl"
+      args = [
+        "set", "image", "deployment/my-deployment",
+        "my-container=gcr.io/${var.project_id}/my-app:$COMMIT_SHA"
+      ]
+      env = [
+        "CLOUDSDK_COMPUTE_ZONE=us-central1-c",
+        "CLOUDSDK_CONTAINER_CLUSTER=my-gke-cluster"
+      ]
+    }
+
+    images = ["gcr.io/${var.project_id}/my-app:$COMMIT_SHA"]
+  }
+}
