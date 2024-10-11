@@ -7,11 +7,14 @@ WORKDIR /app
 # Copy package.json and package-lock.json files to the container
 COPY package*.json ./
 
-# Install the dependencies
-RUN npm install
+# Install the dependencies using npm ci for a clean install
+RUN npm ci
 
 # Copy the rest of the application files to the container
 COPY . .
+
+# Set the environment to production (optional)
+ENV NODE_ENV=production
 
 # Expose the application port (adjust if needed)
 EXPOSE 3000
