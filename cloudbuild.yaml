@@ -16,8 +16,8 @@ steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
   args: [
-    '-c', 
-    'curl -sSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && helm upgrade --install furniture-app-release . --set image.repository=gcr.io/$PROJECT_ID/furniture-application --set image.tag=$COMMIT_SHA --namespace default'
+    '-c',
+    'curl -sSL https://get.helm.sh/helm-v3.16.2-linux-amd64.tar.gz | tar xz && mv linux-amd64/helm ./helm && ./helm upgrade --install furniture-app-release . --set image.repository=gcr.io/$PROJECT_ID/furniture-application --set image.tag=$COMMIT_SHA --namespace default'
   ]
   dir: 'helm/application/chart'
 
