@@ -1,14 +1,14 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/application/Dockerfile:$COMMIT_SHA', '.']
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/application/dockerfile:$COMMIT_SHA', '.']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/$PROJECT_ID/furniture-application:$COMMIT_SHA']
 
 - name: 'gcr.io/cloud-builders/helm'
-  dir: 'helm'  # Set the directory to where the Helm chart is located
+  dir: 'helm'
   args: [
     'upgrade', '--install', 'furniture-app-release',
-    '.',  # The Helm chart is located in the current directory set by `dir`
+    '.',
     '--set', 'image.repository=gcr.io/$PROJECT_ID/furniture-application',
     '--set', 'image.tag=$COMMIT_SHA',
     '--namespace', 'default'
