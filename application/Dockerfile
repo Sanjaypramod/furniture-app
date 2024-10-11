@@ -18,7 +18,7 @@ ENV NPM_CONFIG_PROGRESS=false
 COPY package*.json ./
 
 # Install the dependencies using npm ci with optimizations
-RUN npm ci --unsafe-perm --no-optional
+# RUN npm ci --unsafe-perm --no-optional
 
 # Copy the rest of the application files to the container
 COPY . .
