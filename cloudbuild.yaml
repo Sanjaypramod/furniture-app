@@ -13,15 +13,13 @@ steps:
     '--project', '$PROJECT_ID'
   ]
 
-- name: 'lachlanevenson/k8s-helm:v3.10.0'
-  dir: 'helm/application/chart'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
   args: [
-    'upgrade', '--install', 'furniture-app-release',
-    '.',
-    '--set', 'image.repository=gcr.io/$PROJECT_ID/furniture-application',
-    '--set', 'image.tag=$COMMIT_SHA',
-    '--namespace', 'default'
+    '-c', 
+    'curl -sSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && helm upgrade --install furniture-app-release . --set image.repository=gcr.io/$PROJECT_ID/furniture-application --set image.tag=$COMMIT_SHA --namespace default'
   ]
+  dir: 'helm/application/chart'
 
 - name: 'gcr.io/cloud-builders/kubectl'
   args: ['rollout', 'status', 'deployment/furniture-app-release', '--namespace', 'default']
