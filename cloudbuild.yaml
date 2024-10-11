@@ -6,6 +6,9 @@ steps:
   args: ['push', 'gcr.io/$PROJECT_ID/furniture-application:$COMMIT_SHA']
 
 - name: 'gcr.io/cloud-builders/kubectl'
+  env:
+    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c' # Set the zone where the cluster is located
+    - 'CLOUDSDK_CONTAINER_CLUSTER=privatecluster' # Set the name of the cluster
   args: [
     'container', 'clusters', 'get-credentials', 'privatecluster',
     '--zone', 'us-central1-c',
@@ -23,6 +26,9 @@ steps:
   ]
 
 - name: 'gcr.io/cloud-builders/kubectl'
+  env:
+    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+    - 'CLOUDSDK_CONTAINER_CLUSTER=privatecluster'
   args: ['rollout', 'status', 'deployment/furniture-app-release', '--namespace', 'default']
 
 images:
