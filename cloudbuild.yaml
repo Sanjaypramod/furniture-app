@@ -13,7 +13,7 @@ steps:
     '--project', '$PROJECT_ID'
   ]
 
-- name: 'gcr.io/cloud-builders/helm'
+- name: 'lachlanevenson/k8s-helm:v3.10.0'
   dir: 'helm/application/chart'
   args: [
     'upgrade', '--install', 'furniture-app-release',
