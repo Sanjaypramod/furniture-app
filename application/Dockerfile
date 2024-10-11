@@ -7,8 +7,9 @@ WORKDIR /app
 # Copy package.json and package-lock.json files to the container
 COPY package*.json ./
 
-# Install the dependencies using npm ci for a clean install
-RUN npm ci
+# Install the dependencies using npm ci
+RUN npm set registry https://registry.npmjs.org/ && \
+    npm ci --unsafe-perm --no-optional
 
 # Copy the rest of the application files to the container
 COPY . .
