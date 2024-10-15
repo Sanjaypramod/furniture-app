@@ -9,7 +9,7 @@ steps:
   entrypoint: 'gcloud'
   args: [
     'container', 'clusters', 'get-credentials', 'privatecluster',
-    '--zone', 'us-central1-c',
+    '--zone', 'asia-east1-a',
     '--project', '$PROJECT_ID'
   ]
 
