@@ -30,4 +30,4 @@ steps:
 images:
 - 'gcr.io/$PROJECT_ID/furniture-application:$COMMIT_SHA'
 
-logsBucket: 'gs://furniture_datasync'
+logsBucket: 'gs://application-data-sync'
