@@ -10,7 +10,8 @@ steps:
   args: [
     'container', 'clusters', 'get-credentials', 'privatecluster',
     '--zone', 'asia-east1-a',
-    '--project', '$PROJECT_ID'
+    '--project', '$PROJECT_ID',
+    '--internal-ip'
   ]
 
 - name: 'gcr.io/cloud-builders/kubectl'
