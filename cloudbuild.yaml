@@ -3,7 +3,7 @@ steps:
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/furniture-application:$COMMIT_SHA', '-f', 'application/Dockerfile', 'application']
 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/furniture-gcr:$COMMIT_SHA']
+  args: ['push', 'furniture-gcr:$COMMIT_SHA']
 
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'gcloud'
