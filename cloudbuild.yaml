@@ -15,6 +15,9 @@ steps:
   ]
 
 - name: 'gcr.io/cloud-builders/kubectl'
+  env:
+    - 'CLOUDSDK_CONTAINER_CLUSTER=privatecluster'
+    - 'CLOUDSDK_COMPUTE_ZONE=asia-east1-a'
   args: ['get', 'nodes']
 
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
